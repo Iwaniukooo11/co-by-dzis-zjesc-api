@@ -105,7 +105,7 @@ exports.getAll = (Model) =>
   catchAsync(async (req, res) => {
     let filter = {}
 
-    const features = new APIFeatures(Model.find(filter), req.query)
+    const features = new APIFeatures(Model.find(filter).populate(), req.query)
       .filter()
       .sort()
       .limit()

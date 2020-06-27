@@ -7,9 +7,9 @@ const foodSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
-      // trim: true,
+      trim: true,
       minlength: 5,
-      // lowercase: true,
+      lowercase: true,
     },
     createdAt: {
       type: Date,
@@ -32,12 +32,34 @@ const foodSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    ingredients: [
+      {
+        quantity: {
+          required: true,
+          type: Number,
+        },
+
+        ingredient: {
+          type: mongoose.Schema.ObjectId,
+          ref: 'Ingredient',
+        },
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 )
+
+foodSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'ingredients.ingredient',
+    select: 'name category -_id',
+  })
+  next()
+})
+
 foodSchema.plugin(uniqueValidator)
 const Food = mongoose.model('Food', foodSchema)
 

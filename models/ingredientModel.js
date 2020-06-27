@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
+
 const ingredientSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -17,6 +19,7 @@ const ingredientSchema = new mongoose.Schema({
     required: true,
   },
 })
+ingredientSchema.plugin(uniqueValidator)
 
 const Ingredient = mongoose.model('Ingredient', ingredientSchema)
 
