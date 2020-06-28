@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const foodSchema = new mongoose.Schema(
   {
+    //TD Zaimplementować porcje
     name: {
       type: String,
       unique: true,

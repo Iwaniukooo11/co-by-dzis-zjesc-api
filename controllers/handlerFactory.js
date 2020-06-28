@@ -103,7 +103,8 @@ exports.getOne = (Model, populateOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res) => {
-    let filter = {}
+    console.log('here!')
+    let filter = req.params || {}
 
     const features = new APIFeatures(Model.find(filter).populate(), req.query)
       .filter()
