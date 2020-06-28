@@ -8,8 +8,6 @@ exports.getAllFoods = catchAsync(async (req, res) => {
   let foodsOk = []
   let foods = []
 
-  console.log(req.query)
-
   if (req.query.ingredients) {
     const queryIngrs = req.query.ingredients.split(',')
     console.log(queryIngrs)
@@ -17,13 +15,15 @@ exports.getAllFoods = catchAsync(async (req, res) => {
     foods = await Food.find()
     console.log(foods[0].ingredients)
     foods.forEach((food) => {
-      const names = food.ingredients.map((obj) => obj.ingredient.name)
-      console.log('names: ', names)
-
+      // const ingredients = food.ingredients.map((obj) => obj.ingredient)
+      const ingredients = [...food.ingredients]
       let isFound = true
       // try {
-      names.forEach((ingr) => {
-        if (!queryIngrs.includes(ingr)) {
+      ingredients.forEach((ingr) => {
+        if (
+          !queryIngrs.includes(ingr.ingredient.name) &&
+          ingr.optional == false
+        ) {
           isFound = false
           // throw FoundException
         }
@@ -33,7 +33,6 @@ exports.getAllFoods = catchAsync(async (req, res) => {
     })
     foods = foodsOk
   } else {
-    console.log('there')
     let filter = {}
 
     const features = new APIFeatures(Food.find(filter), req.query)
@@ -42,11 +41,9 @@ exports.getAllFoods = catchAsync(async (req, res) => {
       .limit()
       .paginate()
     foods = await features.query
-    console.log(foods)
   }
 
   // const foods = await Food.find()
-  console.log(foods)
   res.status(200).json({
     test: 'OK',
     quantity: foods.length,
