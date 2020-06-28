@@ -13,25 +13,24 @@ exports.getAllFoods = catchAsync(async (req, res) => {
     console.log(queryIngrs)
 
     foods = await Food.find()
-    console.log(foods[0].ingredients)
     foods.forEach((food) => {
-      // const ingredients = food.ingredients.map((obj) => obj.ingredient)
       const ingredients = [...food.ingredients]
+
       let isFound = true
-      // try {
-      ingredients.forEach((ingr) => {
-        if (
-          !queryIngrs.includes(ingr.ingredient.name) &&
-          ingr.optional == false
-        ) {
-          isFound = false
-          // throw FoundException
-        }
-      })
-      // } catch {}
+      try {
+        ingredients.forEach((obj) => {
+          if (
+            !queryIngrs.includes(obj.ingredient.name) &&
+            obj.optional == false
+          ) {
+            isFound = false
+            throw FoundException
+          }
+        })
+      } catch {}
       if (isFound) foodsOk.push(food)
     })
-    foods = foodsOk
+    foods = [...foodsOk]
   } else {
     let filter = {}
 
@@ -43,17 +42,14 @@ exports.getAllFoods = catchAsync(async (req, res) => {
     foods = await features.query
   }
 
-  // const foods = await Food.find()
   res.status(200).json({
     test: 'OK',
-    quantity: foods.length,
+    results: foods.length,
     data: {
       data: foods,
     },
   })
 })
-
-// exports.getAllFoods = factory.getAll(Food)
 
 exports.createFood = factory.createOne(Food)
 exports.updateFood = factory.updateOne(Food)

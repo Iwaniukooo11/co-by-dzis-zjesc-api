@@ -65,6 +65,10 @@ foodSchema.pre(/^find/, function (next) {
   next()
 })
 
+foodSchema.virtual('ingredientsQuantity').get(function () {
+  return this.ingredients.length
+})
+
 foodSchema.plugin(uniqueValidator)
 const Food = mongoose.model('Food', foodSchema)
 
