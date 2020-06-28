@@ -3,7 +3,6 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const foodSchema = new mongoose.Schema(
   {
-    //TD Zaimplementować porcje
     name: {
       type: String,
       unique: true,
@@ -24,6 +23,11 @@ const foodSchema = new mongoose.Schema(
         validator: Number.isInteger,
         message: '{VALUE} is not an integer value',
       },
+    },
+    portion: {
+      type: Number,
+      default: 1,
+      min: 1,
     },
     content: [
       {
