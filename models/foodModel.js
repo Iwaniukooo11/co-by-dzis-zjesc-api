@@ -39,6 +39,10 @@ const foodSchema = new mongoose.Schema(
           required: true,
           type: Number,
         },
+        optional: {
+          type: Boolean,
+          default: false,
+        },
 
         ingredient: {
           type: mongoose.Schema.ObjectId,

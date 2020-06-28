@@ -9,10 +9,7 @@ const ingredientSchema = new mongoose.Schema({
     required: true,
     minlength: 3,
   },
-  optional: {
-    type: Boolean,
-    default: false,
-  },
+
   category: {
     type: String,
     enum: ['warzywa', 'owoce', 'przyprawy', 'nabiał', 'pieczywo'], //TD -- END
