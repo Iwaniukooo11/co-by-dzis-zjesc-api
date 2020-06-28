@@ -28,6 +28,10 @@ const foodSchema = new mongoose.Schema(
       type: Number,
       default: 1,
       min: 1,
+      validate: {
+        validator: Number.isInteger,
+        message: '{VALUE} is not an integer value',
+      },
     },
     content: [
       {
