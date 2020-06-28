@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const timestamps = require('mongoose-timestamp')
 
 const foodSchema = new mongoose.Schema(
   {
@@ -11,10 +12,10 @@ const foodSchema = new mongoose.Schema(
       minlength: 5,
       lowercase: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
-    },
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now(),
+    // },
     time: {
       type: Number,
       min: 1,
@@ -78,6 +79,7 @@ foodSchema.virtual('ingredientsQuantity').get(function () {
 })
 
 foodSchema.plugin(uniqueValidator)
+foodSchema.plugin(timestamps)
 const Food = mongoose.model('Food', foodSchema)
 
 module.exports = Food

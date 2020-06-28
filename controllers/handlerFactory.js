@@ -3,6 +3,9 @@
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 const APIFeatures = require('../utils/apiFeatures')
+const { ACTIONS } = require('admin-bro')
+const Food = require('../models/foodModel')
+const { update } = require('../models/foodModel')
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -47,11 +50,14 @@ exports.disactiveOne = (Model) =>
     })
   })
 
-exports.updateOne = (Model) =>
+const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    console.log('HERE  I AM')
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      // new: true,
       runValidators: true,
+      context: 'query',
+      upsert: true,
     })
     if (!doc) {
       return next(new AppError('No doc found with that ID', 404))
@@ -64,6 +70,20 @@ exports.updateOne = (Model) =>
       },
     })
   })
+exports.updateOne = updateOne
+
+// ACTIONS.edit.handler = async (req, res, context) => {
+//   // console.log(req)
+//   console.log(req.record.params._id)
+//   const doc = await Food.findByIdAndUpdate(req.record.params._id, req.body, {
+//     runValidators: true,
+//     context: 'query',
+//     upsert: true,
+//   })
+//   return {
+//     record: doc.toJSON(context.currentAdmin),
+//   }
+// }
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res) => {

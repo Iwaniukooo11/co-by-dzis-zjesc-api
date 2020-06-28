@@ -51,6 +51,7 @@ exports.getAllFoods = catchAsync(async (req, res) => {
   })
 })
 
+exports.getOneFood = factory.getOne(Food)
 exports.createFood = factory.createOne(Food)
 exports.updateFood = factory.updateOne(Food)
 exports.deleteFood = factory.deleteOne(Food)

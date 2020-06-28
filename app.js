@@ -3,6 +3,7 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const rateLimit = require('express-rate-limit')
 // const cookieParser = require('cookie-parser')
+const formidableMiddleware = require('express-formidable')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
@@ -12,8 +13,11 @@ const foodRouter = require('./routes/foodRouter')
 const ingredientRouter = require('./routes/ingredientRouter')
 const globalErrorHandler = require('./controllers/errorController')
 
-const app = express()
+const AdminBroExpressjs = require('admin-bro-expressjs')
+const adminBro = require('./utils/adminBro')
 
+const app = express()
+// app.use(formidableMiddleware())
 app.use(cors())
 app.options('*', cors())
 
@@ -47,6 +51,7 @@ app.get('/api/test', (req, res) => {
   })
 })
 
+app.use(adminBro.options.rootPath, AdminBroExpressjs.buildRouter(adminBro))
 app.use('/api/v1/food', foodRouter)
 app.use('/api/v1/ingredient', ingredientRouter)
 
