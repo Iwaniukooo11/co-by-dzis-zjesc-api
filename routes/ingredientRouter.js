@@ -6,7 +6,9 @@ router
   .route('/')
   .get(ingredientController.getAllIngredients)
   .post(ingredientController.createIngredient)
-  .patch(ingredientController.updateIngredient)
   .delete(ingredientController.deleteIngredient)
+
+router.route('/:id').patch(ingredientController.updateIngredient)
+router.route('/all-categories').get(ingredientController.getAllCategories)
 
 module.exports = router

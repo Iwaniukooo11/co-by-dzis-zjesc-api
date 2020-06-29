@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const categories = require('../utils/ingredientCategories')
 
 const ingredientSchema = new mongoose.Schema({
   name: {
@@ -11,7 +12,7 @@ const ingredientSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['warzywa', 'owoce', 'przyprawy', 'nabiał', 'pieczywo'], //TD -- END
+    enum: categories, //TD -- END
     required: true,
   },
 })
