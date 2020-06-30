@@ -1,1 +1,1 @@
-export default ['warzywa', 'owoce', 'przyprawy', 'nabiał', 'pieczywo']
+module.exports = ['warzywa', 'owoce', 'przyprawy', 'nabiał', 'pieczywo']

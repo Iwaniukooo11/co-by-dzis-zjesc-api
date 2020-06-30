@@ -7,6 +7,7 @@ exports.getAllFoods = catchAsync(async (req, res) => {
   //TD - Zaimplementować dobre query
   let foodsOk = []
   let foods = []
+  const limit = req.query.limit || null
 
   if (req.query.ingredients) {
     const queryIngrs = req.query.ingredients.split(',')
@@ -28,7 +29,10 @@ exports.getAllFoods = catchAsync(async (req, res) => {
           }
         })
       } catch {}
-      if (isFound) foodsOk.push(food)
+      if (isFound) {
+        if (foodsOk.length < limit) foodsOk.push(food)
+        else return
+      }
     })
     foods = [...foodsOk]
   } else {

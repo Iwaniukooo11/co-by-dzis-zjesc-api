@@ -13,7 +13,7 @@ const categories = require('../utils/ingredientCategories')
 //     data: ingredients,
 //   })
 // })
-exports.getAllingredients = facotry.getAll(Ingredient)
+exports.getAllIngredients = factory.getAll(Ingredient)
 exports.createIngredient = factory.createOne(Ingredient)
 exports.updateIngredient = factory.updateOne(Ingredient)
 exports.deleteIngredient = factory.deleteOne(Ingredient)
