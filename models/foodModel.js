@@ -12,10 +12,10 @@ const foodSchema = new mongoose.Schema(
       minlength: 5,
       lowercase: true,
     },
-    // createdAt: {
-    //   type: Date,
-    //   default: Date.now(),
-    // },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
     time: {
       type: Number,
       min: 1,
@@ -84,8 +84,8 @@ foodSchema.virtual('ingredientsQuantity').get(function () {
   return this.ingredients.length
 })
 
-foodSchema.plugin(uniqueValidator)
-foodSchema.plugin(timestamps)
+// foodSchema.plugin(uniqueValidator)
+// foodSchema.plugin(timestamps)
 const Food = mongoose.model('Food', foodSchema)
 
 module.exports = Food

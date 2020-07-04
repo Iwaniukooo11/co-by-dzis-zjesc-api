@@ -1,26 +1,28 @@
 const express = require('express')
 const helmet = require('helmet')
 const morgan = require('morgan')
+const bodyParser = require('body-parser')
 const rateLimit = require('express-rate-limit')
-// const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 const formidableMiddleware = require('express-formidable')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const cors = require('cors')
+const { adminBro, adminAuth } = require('./utils/adminBro')
 
 const foodRouter = require('./routes/foodRouter')
 const ingredientRouter = require('./routes/ingredientRouter')
 const globalErrorHandler = require('./controllers/errorController')
 
 const AdminBroExpressjs = require('admin-bro-expressjs')
-const adminBro = require('./utils/adminBro')
 
 const app = express()
-// app.use(formidableMiddleware())
+app.use(formidableMiddleware())
+
 app.use(cors())
 app.options('*', cors())
-
+// app.use(bodyParser.urlencoded({ extended: true }))
 app.use(helmet())
 
 if (process.env.NODE_ENV === 'development') {
@@ -34,8 +36,8 @@ const limiter = rateLimit({
 })
 app.use('/api', limiter)
 app.use(express.json({ limit: '10kb' }))
-app.use(express.urlencoded({ extended: true, limit: '10kb' }))
-// app.use(cookieParser());
+// app.use(express.urlencoded({ extended: true, limit: '10kb' }))
+app.use(cookieParser())
 app.use(mongoSanitize())
 app.use(xss())
 
@@ -51,7 +53,19 @@ app.get('/api/test', (req, res) => {
   })
 })
 
-app.use(adminBro.options.rootPath, AdminBroExpressjs.buildRouter(adminBro))
+app.use(
+  adminBro.options.rootPath,
+  AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth)
+  // AdminBroExpressjs.buildRouter(adminBro)
+)
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true, limit: '10kb' }))
+
+app.use(bodyParser.json())
+
+// app.use(bodyParser())
+
 app.use('/api/v1/food', foodRouter)
 app.use('/api/v1/ingredient', ingredientRouter)
 

@@ -16,7 +16,7 @@ const ingredientSchema = new mongoose.Schema({
     required: true,
   },
 })
-ingredientSchema.plugin(uniqueValidator)
+// ingredientSchema.plugin(uniqueValidator)
 
 const Ingredient = mongoose.model('Ingredient', ingredientSchema)
 
