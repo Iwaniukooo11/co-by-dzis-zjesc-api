@@ -40,6 +40,15 @@ const foodSchema = new mongoose.Schema(
         trim: true,
         min: 8,
         required: true,
+        set: (text) => {
+          text = text.trim()
+          text = text.charAt(0).toUpperCase() + text.slice(1) //capitalizes a string
+
+          if (text[text.length - 1] === '.')
+            text = text.substring(0, text.length - 1) //removes last dot
+
+          return text
+        },
       },
     ],
     ingredients: [
