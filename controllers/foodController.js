@@ -17,14 +17,15 @@ exports.getAllFoods = catchAsync(async (req, res) => {
     foods.forEach((food) => {
       const ingredients = [...food.ingredients]
 
-      let isFound = true
+      let isFound = false
       try {
         ingredients.forEach((obj) => {
           if (
-            !queryIngrs.includes(obj.ingredient.name) &&
+            // !queryIngrs.includes(obj.ingredient.name) &&
+            queryIngrs.includes(obj.ingredient.name) &&
             obj.optional == false
           ) {
-            isFound = false
+            isFound = true
             throw FoundException
           }
         })
