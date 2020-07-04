@@ -4,7 +4,6 @@ const Food = require('../models/foodModel')
 const Ingredient = require('../models/ingredientModel')
 const mongoose = require('mongoose')
 const Moderator = require('../models/moderatorModel')
-const bcrypt = require('bcrypt')
 
 // We have to tell AdminBro that we will manage mongoose resources with it
 AdminBro.registerAdapter(require('admin-bro-mongoose'))
@@ -64,7 +63,7 @@ exports.adminAuth = {
     if (user) {
       // const matched = await bcrypt.compare(password, user.encryptedPassword)
       // const matched = password === user.encryptedPassword
-      const matched = password === user.password
+      const matched = user.comparePasswords(password, user.password)
       if (matched) {
         return user
       }
