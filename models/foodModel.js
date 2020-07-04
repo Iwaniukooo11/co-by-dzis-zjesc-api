@@ -46,7 +46,13 @@ const foodSchema = new mongoose.Schema(
       {
         quantity: {
           required: true,
-          type: Number,
+          type: String,
+        },
+        quantityType: {
+          // required: true,
+          type: String,
+          enum: ['ml', 'g', 'jednostki'],
+          default: 'jednostki',
         },
         optional: {
           type: Boolean,

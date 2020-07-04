@@ -35,9 +35,12 @@ exports.getAllFoods = catchAsync(async (req, res) => {
         foodsOk.push(food)
       }
     })
+    console.log('foodOk1: ', foodsOk)
     foodsOk.sort(
-      (objA, objB) => objA.ingredientsQuantity - objB.ingredientsQuantity
+      (objA, objB) => objB.ingredientsQuantity - objA.ingredientsQuantity
     )
+    console.log('foodOk2Sorted: ', foodsOk)
+
     foods = []
     foodsOk.forEach((el, i) => {
       if (i < limit) foods.push(el)
