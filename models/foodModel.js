@@ -53,15 +53,24 @@ const foodSchema = new mongoose.Schema(
     ],
     ingredients: [
       {
-        quantity: {
-          required: true,
-          type: String,
-        },
         quantityType: {
           // required: true,
           type: String,
-          enum: ['ml', 'g', 'jednostki'],
+          enum: [
+            'ml',
+            'g',
+            'jednostki',
+            'szklanka',
+            'szczypta',
+            'łyżka',
+            'łyżeczka',
+            '',
+          ],
           default: 'jednostki',
+        },
+        quantity: {
+          required: true,
+          type: String,
         },
         optional: {
           type: Boolean,

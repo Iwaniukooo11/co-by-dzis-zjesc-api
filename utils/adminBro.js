@@ -71,4 +71,6 @@ exports.adminAuth = {
     return false
   },
   cookiePassword: 'some-secret-password-used-to-secure-cookie',
+  // maxAge: 30,
+  // expires: new Date(Date.now() + 30 * 1000),
 }

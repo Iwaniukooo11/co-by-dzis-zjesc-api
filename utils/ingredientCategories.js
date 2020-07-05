@@ -1,1 +1,11 @@
-module.exports = ['warzywa', 'owoce', 'przyprawy', 'nabiał', 'pieczywo']
+module.exports = [
+  'warzywa',
+  'podstawowe',
+  'owoce',
+  'przyprawy',
+  'nabiał',
+  'pieczywo',
+  'mięso',
+  'sosy',
+  'inne',
+]

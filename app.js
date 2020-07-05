@@ -55,7 +55,11 @@ app.get('/api/test', (req, res) => {
 
 app.use(
   adminBro.options.rootPath,
-  AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth)
+  AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth, null, {
+    maxAge: 60 * 1000,
+    resave: false,
+    saveUninitialized: true,
+  })
   // AdminBroExpressjs.buildRouter(adminBro)
 )
 // app.use(bodyParser.urlencoded({ extended: false }))

@@ -11,25 +11,35 @@ exports.getAllFoods = catchAsync(async (req, res) => {
 
   if (req.query.ingredients) {
     const queryIngrs = req.query.ingredients.split(',')
-    console.log(queryIngrs)
+    console.log('query ingrs: ', queryIngrs)
 
     foods = await Food.find()
     foods.forEach((food) => {
-      const ingredients = [...food.ingredients]
+      console.log('-------------', food.name)
 
-      let isFound = false
-      try {
-        ingredients.forEach((obj) => {
-          if (
-            // !queryIngrs.includes(obj.ingredient.name) &&
-            queryIngrs.includes(obj.ingredient.name) &&
-            obj.optional == false
-          ) {
-            isFound = true
-            throw FoundException
-          }
-        })
-      } catch {}
+      let isFound = true
+      // try {
+      const ingredients = [...food.ingredients]
+      ingredients.forEach((obj) => {
+        //jeśli nie ma w spisie, a skladnik jest obowiazkowy i jest na liscie obowiazkowych
+        if (
+          // !queryIngrs.includes(obj.ingredient.name) &&
+          !queryIngrs.includes(obj.ingredient.name) &&
+          obj.optional === false &&
+          !['podstawowe', 'przyprawy'].includes(obj.ingredient.category)
+        ) {
+          isFound = false
+          console.log(
+            'DINT FOUND',
+            obj.ingredient.name,
+            queryIngrs.includes(obj.ingredient.name),
+            obj.optional === false,
+            ['podstawowe', 'przyprawy'].includes(obj.ingredient.category)
+          )
+          // throw NotFoundException
+        }
+      })
+      // } catch {}
       if (isFound) {
         // if (foodsOk.length < limit) foodsOk.push(food)
         // else return
