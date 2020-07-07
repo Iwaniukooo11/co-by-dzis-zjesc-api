@@ -2,6 +2,8 @@ const Food = require('../models/foodModel')
 const factory = require('./handlerFactory')
 const catchAsync = require('../utils/catchAsync')
 const APIFeatures = require('../utils/apiFeatures')
+const randomize = require('randomize-array')
+const equal = require('deep-equal')
 
 exports.getAllFoods = catchAsync(async (req, res) => {
   //TD - Zaimplementować dobre query
@@ -13,6 +15,10 @@ exports.getAllFoods = catchAsync(async (req, res) => {
     const queryIngrs = req.query.ingredients.split(',')
     console.log('query ingrs: ', queryIngrs)
 
+    const max = {
+      quantity: 0,
+      food: null,
+    }
     foods = await Food.find()
     foods.forEach((food) => {
       console.log('-------------', food.name)
@@ -29,13 +35,14 @@ exports.getAllFoods = catchAsync(async (req, res) => {
           !['podstawowe', 'przyprawy'].includes(obj.ingredient.category)
         ) {
           isFound = false
-          console.log(
-            'DINT FOUND',
-            obj.ingredient.name,
-            queryIngrs.includes(obj.ingredient.name),
-            obj.optional === false,
-            ['podstawowe', 'przyprawy'].includes(obj.ingredient.category)
-          )
+          // console.log(
+          //   'DINT FOUND',
+          //   obj.ingredient.name,
+          //   queryIngrs.includes(obj.ingredient.name),
+          //   obj.optional === false,
+          //   // ['podstawowe', 'przyprawy'].includes(obj.ingredient.category)
+          //   ['przyprawy'].includes(obj.ingredient.category)
+          // )
           // throw NotFoundException
         }
       })
@@ -44,13 +51,24 @@ exports.getAllFoods = catchAsync(async (req, res) => {
         // if (foodsOk.length < limit) foodsOk.push(food)
         // else return
         foodsOk.push(food)
+        console.log('pushed food:', food)
+        if (food.ingredientsQuantity > max.quantity) {
+          max.quantity = food.ingredientsQuantity
+          max.food = food
+        }
       }
     })
-    console.log('foodOk1: ', foodsOk)
-    foodsOk.sort(
-      (objA, objB) => objB.ingredientsQuantity - objA.ingredientsQuantity
-    )
-    console.log('foodOk2Sorted: ', foodsOk)
+    // console.log('foodOk1: ', foodsOk)
+    // foodsOk.sort(
+    //   (objA, objB) => objB.ingredientsQuantity - objA.ingredientsQuantity
+    // )
+    // console.log('foodOk2Sorted: ', foodsOk)
+    console.log('MAX FOOD: ', max.food)
+    foodsOk = randomize(foodsOk) //test, inserts food with biggest ingr quantity into beginning and removes it from other indexes in arr TO OPTIMIZE
+
+    // if (foodsOk[0].name !== max.food.name) foodsOk.unshift(max.food)
+    foodsOk = foodsOk.filter((obj, i) => obj.name !== max.food.name)
+    if (foodsOk[0].name !== max.food.name) foodsOk.unshift(max.food)
 
     foods = []
     foodsOk.forEach((el, i) => {

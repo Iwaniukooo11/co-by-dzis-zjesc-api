@@ -21,7 +21,8 @@ exports.deleteIngredient = factory.deleteOne(Ingredient)
 exports.getAllCategories = catchAsync(async (req, res) => {
   //test?
   categories = categories.filter(
-    (cat) => !['podstawowe', 'przyprawy'].includes(cat)
+    // (cat) => !['podstawowe', 'przyprawy'].includes(cat)
+    (cat) => !['przyprawy'].includes(cat)
   )
   res.status(200).json({
     status: 'OK',
