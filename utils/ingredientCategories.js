@@ -6,6 +6,7 @@ module.exports = [
   'nabiał',
   'pieczywo',
   'mięso',
+  'makarony',
   'sosy',
   'inne',
 ]

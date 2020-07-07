@@ -3,7 +3,7 @@ const factory = require('./handlerFactory')
 const catchAsync = require('../utils/catchAsync')
 const APIFeatures = require('../utils/apiFeatures')
 
-const categories = require('../utils/ingredientCategories')
+let categories = require('../utils/ingredientCategories')
 // exports.getAllIngredients = catchAsync(async (req, res) => {
 //   const features = new APIFeatures(Food.find(), req.query).filter()
 //   const ingredients = await features.query
@@ -19,6 +19,10 @@ exports.updateIngredient = factory.updateOne(Ingredient)
 exports.deleteIngredient = factory.deleteOne(Ingredient)
 
 exports.getAllCategories = catchAsync(async (req, res) => {
+  //test?
+  categories = categories.filter(
+    (cat) => !['podstawowe', 'przyprawy'].includes(cat)
+  )
   res.status(200).json({
     status: 'OK',
     results: categories.length,

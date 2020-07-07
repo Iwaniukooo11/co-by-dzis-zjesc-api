@@ -57,6 +57,7 @@ app.use(
   adminBro.options.rootPath,
   AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth, null, {
     maxAge: 60 * 1000,
+    expires: new Date(Date.now() + 60 * 1000),
     resave: false,
     saveUninitialized: true,
   })
