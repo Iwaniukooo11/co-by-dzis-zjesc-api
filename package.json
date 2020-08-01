@@ -2,7 +2,7 @@
   "name": "co-by-dzis-zjesc-api",
   "version": "1.0.0",
   "description": "Api do apki",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "",
     "start": "node server.js",
