@@ -73,6 +73,7 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
 exports.runStats = catchAsync(async (req, res, next) => {
   await Stats.create({
     foods: req.foods || [],
+    quantity: req.foods.length ?? 0,
   })
   next()
 })
