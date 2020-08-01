@@ -58,7 +58,7 @@ const adminBro = new AdminBro({
 exports.adminBro = adminBro
 exports.adminAuth = {
   authenticate: async (email, password) => {
-    console.log('IN FUNC')
+    // console.log('IN FUNC')
     const user = await Moderator.findOne({ email })
     if (user) {
       // const matched = await bcrypt.compare(password, user.encryptedPassword)

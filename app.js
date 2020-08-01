@@ -42,7 +42,7 @@ app.use(mongoSanitize())
 app.use(xss())
 
 app.use((req, res, next) => {
-  console.log('Hello from the middleware 👋')
+  // console.log('Hello from the middleware 👋')
   next()
 })
 

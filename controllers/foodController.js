@@ -13,7 +13,7 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
 
   if (req.query.ingredients) {
     const queryIngrs = req.query.ingredients.split(',')
-    console.log('query ingrs: ', queryIngrs)
+    // console.log('query ingrs: ', queryIngrs)
 
     const max = {
       quantity: 0,
@@ -21,7 +21,7 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
     }
     foods = await Food.find()
     foods.forEach((food) => {
-      console.log('-------------', food.name)
+      // console.log('-------------', food.name)
 
       let isFound = true
       const ingredients = [...food.ingredients]
@@ -37,14 +37,14 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
       })
       if (isFound) {
         foodsOk.push(food)
-        console.log('pushed food:', food)
+        // console.log('pushed food:', food)
         if (food.ingredientsQuantity > max.quantity) {
           max.quantity = food.ingredientsQuantity
           max.food = food
         }
       }
     })
-    console.log('MAX FOOD: ', max.food)
+    // console.log('MAX FOOD: ', max.food)
     foodsOk = randomize(foodsOk) //test, inserts food with biggest ingr quantity into beginning and removes it from other indexes in arr TO OPTIMIZE
 
     foodsOk = foodsOk.filter((obj, i) => obj.name !== (max.food.name || ':('))
@@ -64,7 +64,8 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
       .paginate()
     foods = (await features.query) || []
   }
-  console.log('foods: ', foods)
+  // console.log('foods: ', foods)
+  console.log('\x1b[32m', `returned ${foods.length} foods`)
   req.foods = [...foods]
   next()
 })
@@ -73,7 +74,6 @@ exports.runStats = catchAsync(async (req, res, next) => {
   await Stats.create({
     foods: req.foods || [],
   })
-  console.log('stats')
   next()
 })
 

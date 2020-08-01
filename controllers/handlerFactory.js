@@ -52,7 +52,7 @@ exports.disactiveOne = (Model) =>
 
 const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log('HERE  I AM')
+    // console.log('HERE  I AM')
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       // new: true,
       runValidators: true,
@@ -88,7 +88,7 @@ exports.updateOne = updateOne
 exports.createOne = (Model) =>
   catchAsync(async (req, res) => {
     const doc = await Model.create(req.body)
-    console.log('\x1b[32m', '|factory| created doc: ', doc)
+    // console.log('\x1b[32m', '|factory| created doc: ', doc)
 
     res.status(201).json({
       status: 'OK',
@@ -123,7 +123,7 @@ exports.getOne = (Model, populateOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res) => {
-    console.log('here!')
+    // console.log('here!')
     let filter = req.params || {}
 
     const features = new APIFeatures(Model.find(filter).populate(), req.query)
