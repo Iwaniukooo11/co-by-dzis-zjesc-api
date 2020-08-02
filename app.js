@@ -14,11 +14,18 @@ const { adminBro, adminAuth } = require('./utils/adminBro')
 const foodRouter = require('./routes/foodRouter')
 const ingredientRouter = require('./routes/ingredientRouter')
 const globalErrorHandler = require('./controllers/errorController')
-
+// const session = require('express-session')
+const PouchSession = require('session-pouchdb-store')
 const AdminBroExpressjs = require('admin-bro-expressjs')
 
 const app = express()
 app.use(formidableMiddleware())
+
+// app.use(session({
+//   secret:'secret-key',
+//   resave:false,
+//   saveUninitialized:true
+// }))
 
 app.use(cors())
 app.options('*', cors())
@@ -60,6 +67,7 @@ app.use(
     expires: new Date(Date.now() + 60 * 1000),
     resave: false,
     saveUninitialized: true,
+    store: new PouchSession(),
   })
   // AdminBroExpressjs.buildRouter(adminBro)
 )
