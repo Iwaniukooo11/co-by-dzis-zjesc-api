@@ -64,8 +64,8 @@ app.get('/api/test', (req, res) => {
 app.use(
   adminBro.options.rootPath,
   AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth, null, {
-    maxAge: 60 * 1000,
-    expires: new Date(Date.now() + 60 * 1000),
+    maxAge: 30 * 60 * 1000,
+    expires: new Date(Date.now() + 30 * 60 * 1000),
     resave: false,
     saveUninitialized: true,
     store: new PouchSession(),
