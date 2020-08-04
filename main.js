@@ -9,14 +9,14 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const cors = require('cors')
-// const { adminBro, adminAuth } = require('./utils/adminBro')
+const { adminBro, adminAuth } = require('./utils/adminBro')
 
 const foodRouter = require('./routes/foodRouter')
 const ingredientRouter = require('./routes/ingredientRouter')
 const globalErrorHandler = require('./controllers/errorController')
 // const session = require('express-session')
 const PouchSession = require('session-pouchdb-store')
-// const AdminBroExpressjs = require('admin-bro-expressjs')
+const AdminBroExpressjs = require('admin-bro-expressjs')
 
 const app = express()
 app.use(formidableMiddleware())
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const limiter = rateLimit({
-  max: 10000, //do zmiany na prod!
+  max: 180, //do zmiany na prod!
   windowMs: 3600 * 1000,
   message: 'too many request from this IP, try again later',
 })
@@ -54,23 +54,24 @@ app.use((req, res, next) => {
 })
 
 app.get('/api/test', (req, res) => {
+  console.log('TEST', process.env.NODE_ENV, process.env.DB)
   res.status(200).json({
     status: 'OK',
     message: 'test',
   })
 })
 
-// app.use(
-//   adminBro.options.rootPath,
-//   AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth, null, {
-//     maxAge: 60 * 1000,
-//     expires: new Date(Date.now() + 60 * 1000),
-//     resave: false,
-//     saveUninitialized: true,
-//     store: new PouchSession(),
-//   })
-//   // AdminBroExpressjs.buildRouter(adminBro)
-// )
+app.use(
+  adminBro.options.rootPath,
+  AdminBroExpressjs.buildAuthenticatedRouter(adminBro, adminAuth, null, {
+    maxAge: 60 * 1000,
+    expires: new Date(Date.now() + 60 * 1000),
+    resave: false,
+    saveUninitialized: true,
+    store: new PouchSession(),
+  })
+  // AdminBroExpressjs.buildRouter(adminBro)
+)
 // app.use(bodyParser.urlencoded({ extended: false }))
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.urlencoded({ extended: true, limit: '10kb' }))

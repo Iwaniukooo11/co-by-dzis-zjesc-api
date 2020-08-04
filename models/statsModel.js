@@ -14,6 +14,7 @@ const statsSchema = new mongoose.Schema({
       _id: mongoose.Schema.ObjectId,
     },
   ],
+  ingredients: [{ type: String, required: true, default: [] }],
   quantity: {
     type: Number,
     required: true,
