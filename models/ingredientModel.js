@@ -17,6 +17,7 @@ const ingredientSchema = new mongoose.Schema({
   },
 })
 // ingredientSchema.plugin(uniqueValidator)
+ingredientSchema.index({ name: 1 })
 
 const Ingredient = mongoose.model('Ingredient', ingredientSchema)
 
