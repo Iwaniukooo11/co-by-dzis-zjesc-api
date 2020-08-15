@@ -18,6 +18,8 @@ const globalErrorHandler = require('./controllers/errorController')
 const PouchSession = require('session-pouchdb-store')
 const AdminBroExpressjs = require('admin-bro-expressjs')
 
+setInterval(() => console.log('i am awake'), 30 * 1000)
+
 const app = express()
 app.use(formidableMiddleware())
 
