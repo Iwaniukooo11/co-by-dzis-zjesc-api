@@ -14,7 +14,6 @@ const { adminBro, adminAuth } = require('./utils/adminBro')
 const foodRouter = require('./routes/foodRouter')
 const ingredientRouter = require('./routes/ingredientRouter')
 const globalErrorHandler = require('./controllers/errorController')
-// const session = require('express-session')
 const PouchSession = require('session-pouchdb-store')
 const AdminBroExpressjs = require('admin-bro-expressjs')
 
@@ -25,15 +24,8 @@ setInterval(() => {
 const app = express()
 app.use(formidableMiddleware())
 
-// app.use(session({
-//   secret:'secret-key',
-//   resave:false,
-//   saveUninitialized:true
-// }))
-
 app.use(cors())
 app.options('*', cors())
-// app.use(bodyParser.urlencoded({ extended: true }))
 app.use(helmet())
 
 if (process.env.NODE_ENV === 'development') {
@@ -47,7 +39,6 @@ const limiter = rateLimit({
 })
 app.use('/api', limiter)
 app.use(express.json({ limit: '10kb' }))
-// app.use(express.urlencoded({ extended: true, limit: '10kb' }))
 app.use(cookieParser())
 app.use(mongoSanitize())
 app.use(xss())
@@ -76,13 +67,8 @@ app.use(
   })
   // AdminBroExpressjs.buildRouter(adminBro)
 )
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.urlencoded({ extended: true, limit: '10kb' }))
-
 app.use(bodyParser.json())
-
-// app.use(bodyParser())
 
 app.use('/api/v1/food', foodRouter)
 app.use('/api/v1/ingredient', ingredientRouter)
