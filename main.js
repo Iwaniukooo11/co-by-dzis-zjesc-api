@@ -19,7 +19,8 @@ const AdminBroExpressjs = require('admin-bro-expressjs')
 
 const Food = require('./models/foodModel')
 setInterval(async () => {
-  let nothing = await Food.find({ name: 'jajecznica' })
+  let nothing = await Food.findOne({ name: 'jajecznica' })
+  console.log('send!!')
 }, 5 * 60 * 1000)
 
 const app = express()
