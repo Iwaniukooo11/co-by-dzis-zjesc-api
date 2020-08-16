@@ -17,9 +17,10 @@ const globalErrorHandler = require('./controllers/errorController')
 const PouchSession = require('session-pouchdb-store')
 const AdminBroExpressjs = require('admin-bro-expressjs')
 
-setInterval(() => {
-  let nothing = 'nothing'
-}, 30 * 1000)
+const Food = require('./models/foodModel')
+setInterval(async () => {
+  let nothing = await Food.find({ name: 'jajecznica' })
+}, 5 * 60 * 1000)
 
 const app = express()
 app.use(formidableMiddleware())
