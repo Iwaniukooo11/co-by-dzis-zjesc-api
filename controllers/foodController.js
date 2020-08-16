@@ -17,9 +17,7 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
 
     const max = {
       quantity: 0,
-      food: {
-        name: '',
-      },
+      food: null,
     }
     foods = await Food.find()
     foods.forEach((food) => {
@@ -49,12 +47,14 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
     // console.log('MAX FOOD: ', max.food)
     foodsOk = randomize(foodsOk) //test, inserts food with biggest ingr quantity into beginning and removes it from other indexes in arr TO OPTIMIZE
     foodsOk = foodsOk.filter((obj, i) => obj.name !== (max.food.name || ':('))
-    console.log('max: ', max.food.name)
+    // console.log('max: ', max.food.name)
     if (
       (foodsOk[0] && foodsOk[0].name ? foodsOk[0].name : '') !==
-      (max.food.name || ':(')
-    )
+      (max.food && max.food.name ? max.food.name : '')
+    ) {
+      console.log('true')
       foodsOk.unshift(max.food)
+    }
 
     foods = []
     foodsOk.forEach((el, i) => {
@@ -72,15 +72,16 @@ exports.getAllFoods = catchAsync(async (req, res, next) => {
   }
   // console.log('foods: ', foods)
   console.log('\x1b[32m', `returned ${foods.length} foods`)
-  req.foods = [...foods]
+  req.foods = [...foods] || []
   next()
 })
 
 exports.runStats = catchAsync(async (req, res, next) => {
+  console.log('stats| foods: ', req.foods)
   await Stats.create({
     foods: req.foods || [],
     quantity: req.foods.length || 0,
-    ingredients: req.query.ingredients.split(','),
+    ingredients: req.query.ingredients ? req.query.ingredients.split(',') : [],
   })
   next()
 })
