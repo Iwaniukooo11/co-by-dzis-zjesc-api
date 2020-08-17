@@ -2,6 +2,7 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const Food = require('../models/foodModel')
 const Ingredient = require('../models/ingredientModel')
+const Stats = require('../models/statsModel')
 
 dotenv.config({ path: './config.env' })
 
@@ -17,6 +18,7 @@ mongoose
 
 const fc = async () => {
   const food = await Food.findOne({ name: 'jajecznica' })
+  await Stats.create({ message: 'pls be alive', time: Date.now() })
   console.log('got', food.name)
 }
 try {
