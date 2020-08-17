@@ -18,8 +18,10 @@ const PouchSession = require('session-pouchdb-store')
 const AdminBroExpressjs = require('admin-bro-expressjs')
 
 const Food = require('./models/foodModel')
+const Log = require('./models/logModel')
 setInterval(async () => {
   let nothing = await Food.findOne({ name: 'jajecznica' })
+  await Log.create({ message: 'i am alive', date: Date.now() })
   console.log(nothing.name)
 }, 1 * 60 * 1000)
 
