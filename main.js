@@ -20,8 +20,8 @@ const AdminBroExpressjs = require('admin-bro-expressjs')
 const Food = require('./models/foodModel')
 setInterval(async () => {
   let nothing = await Food.findOne({ name: 'jajecznica' })
-  console.log('send!!')
-}, 5 * 60 * 1000)
+  console.log(nothing.name)
+}, 1 * 60 * 1000)
 
 const app = express()
 app.use(formidableMiddleware())
