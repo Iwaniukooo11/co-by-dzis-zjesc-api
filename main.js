@@ -13,12 +13,13 @@ const { adminBro, adminAuth } = require('./utils/adminBro')
 
 const foodRouter = require('./routes/foodRouter')
 const ingredientRouter = require('./routes/ingredientRouter')
+const foodPropositionRouter = require('./routes/foodPropositionRouter')
+const ingredientPropositionRouter = require('./routes/ingredientPropositionRouter')
 const globalErrorHandler = require('./controllers/errorController')
 const PouchSession = require('session-pouchdb-store')
 const AdminBroExpressjs = require('admin-bro-expressjs')
 
 const Food = require('./models/foodModel')
-const Log = require('./models/logModel')
 // setInterval(async () => {
 //   let nothing = await Food.findOne({ name: 'jajecznica' })
 //   await Log.create({ message: 'i am alive', time: Date.now() })
@@ -26,7 +27,9 @@ const Log = require('./models/logModel')
 // }, 1 * 60 * 1000)
 
 const app = express()
-app.use(formidableMiddleware())
+app.use(bodyParser.json())
+
+// app.use(formidableMiddleware())
 
 app.use(cors())
 app.options('*', cors())
@@ -72,10 +75,12 @@ app.use(
   // AdminBroExpressjs.buildRouter(adminBro)
 )
 app.use(express.urlencoded({ extended: true, limit: '10kb' }))
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
 
 app.use('/api/v1/food', foodRouter)
 app.use('/api/v1/ingredient', ingredientRouter)
+app.use('/api/v1/food-proposition', foodPropositionRouter)
+app.use('/api/v1/ingredient-proposition', ingredientPropositionRouter)
 
 app.use(globalErrorHandler)
 

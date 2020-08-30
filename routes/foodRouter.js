@@ -3,13 +3,11 @@ const foodController = require('../controllers/foodController')
 const router = express.Router()
 const authController = require('../controllers/authController')
 
-router
-  .route('/')
-  .get(
-    foodController.getAllFoods,
-    foodController.runStats,
-    foodController.returnFood
-  )
+router.route('/').get(
+  foodController.getAllFoods,
+  // foodController.runStats,
+  foodController.returnFood
+)
 // .post(foodController.createFood)
 // .delete(foodController.deleteFood)
 
