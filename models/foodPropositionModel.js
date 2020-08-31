@@ -40,10 +40,12 @@ const foodPropositionSchema = new mongoose.Schema(
       type: String,
       minlength: [20, 'Przepis powinien mieć minimum 20 znaków'],
     },
-    stuff: {
-      type: String,
-      enum: ['Piekarnik', 'Blender', 'Mikrowela'],
-    },
+    stuff: [
+      {
+        type: String,
+        enum: ['Piekarnik', 'Blender', 'Mikrowela'],
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
