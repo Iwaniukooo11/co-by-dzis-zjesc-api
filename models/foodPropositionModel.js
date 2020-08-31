@@ -22,15 +22,15 @@ const foodPropositionSchema = new mongoose.Schema(
       default: Date.now(),
     },
     time: {
-      type: Number,
-      min: 1,
-      max: 999,
+      type: String,
+      minlength: 1,
+      maxlength: 3,
       required: [true, 'Podaj czas'],
     },
     portion: {
-      type: Number,
-      min: 1,
-      max: 99,
+      type: String,
+      minlength: 1,
+      maxlength: 2,
     },
     ingredients: {
       type: String,
@@ -40,11 +40,10 @@ const foodPropositionSchema = new mongoose.Schema(
       type: String,
       minlength: [20, 'Przepis powinien mieć minimum 20 znaków'],
     },
-    stuff: [
-      {
-        type: String,
-      },
-    ],
+    stuff: {
+      type: String,
+      enum: ['Piekarnik', 'Blender', 'Mikrowela'],
+    },
   },
   {
     toJSON: { virtuals: true },
