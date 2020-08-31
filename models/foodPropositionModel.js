@@ -31,18 +31,22 @@ const foodPropositionSchema = new mongoose.Schema(
       type: String,
       minlength: 1,
       maxlength: 2,
+      required: [true, 'Podaj porcje'],
     },
     ingredients: {
       type: String,
+      required: [true, 'Podaj składniki'],
       minlength: [15, 'Składniki powinny mieć minimum 15 znaków'],
     },
     content: {
       type: String,
+      required: [true, 'Podaj przepis'],
       minlength: [20, 'Przepis powinien mieć minimum 20 znaków'],
     },
     stuff: [
       {
         type: String,
+        default: [],
         enum: ['Piekarnik', 'Blender', 'Mikrowela'],
       },
     ],
