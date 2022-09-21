@@ -33,5 +33,6 @@ Note, that because of production problems:
  - CRUD operations
  - Returning a proposition of meal which contains ingredients passed in the request
  - Basic authorization. Request must come centrainly from mobile app, because then it contains neccessary header
+ - Saving stats of requested ingredients and given meal
 
 
