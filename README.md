@@ -5,7 +5,7 @@ Backend of my mobile-app called "Co by dziś zjeść"
 
 Unfortunately, because of server costs and lack of time, I had to remove my app from Google Play. 
 
-You may be interested in [Frontend of "Co by dziś zjeść" App](#)
+You may be interested in [Frontend of "Co by dziś zjeść" App](https://github.com/Iwaniukooo11/co-by-dzis-zjesc-app)
 
 Used technologies:
  - admin-bro (as CMS)
